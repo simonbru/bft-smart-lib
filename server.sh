@@ -1,9 +1,7 @@
 #!/bin/bash
 
 MY_IP="$(hostname -i | awk '{print $1}')"
-MY_ID="$(tr -d . <<<"$MY_IP")"
 echo "MY_IP=$MY_IP"
-echo "MY_ID=$MY_ID"
 
 declare -a ips
 while [[ ${#ips[@]} -ne $PEER_NUMBER ]]; do
@@ -12,9 +10,16 @@ while [[ ${#ips[@]} -ne $PEER_NUMBER ]]; do
     sleep 1
 done
 
+current_id=0
 for ip in "${ips[@]}"; do
-    peerid="$(tr -d . <<<"$ip")"
-    printf "%s %s 11000\n" "$peerid" "$ip"
+    if [[ "$ip" == "$MY_IP" ]]; then
+        MY_ID=$current_id
+    fi
+    printf "%s %s 11000\n" "$current_id" "$ip"
+    ((current_id++))
 done >config/hosts.config
 
-runscripts/smartrun.sh bftsmart.demo.microbenchmarks.LatencyServer "$MY_ID" 1000 300
+echo "MY_ID=$MY_ID"
+
+exec runscripts/smartrun.sh bftsmart.demo.counter.CounterServer "$MY_ID"
+# exec runscripts/smartrun.sh bftsmart.demo.microbenchmarks.LatencyServer "$MY_ID" 200 300
