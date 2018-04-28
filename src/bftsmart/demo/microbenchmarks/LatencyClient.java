@@ -45,20 +45,20 @@ public class LatencyClient {
 
             byte[] request = new byte[requestSize], reply;
 
-            System.out.println("Warm up...");
+//            System.out.println("Warm up...");
+//
+//            for (int i = 0; i < numberOfOps/2; i++) {
+//            	if(readOnly)
+//            		reply = counterProxy.invokeUnordered(request);
+//            	else
+//            		reply = counterProxy.invokeOrdered(request);
+//            }
 
-            for (int i = 0; i < numberOfOps/2; i++) {
-            	if(readOnly)
-            		reply = counterProxy.invokeUnordered(request);
-            	else
-            		reply = counterProxy.invokeOrdered(request);
-            }
+            Storage st = new Storage(numberOfOps);
 
-            Storage st = new Storage(numberOfOps/2);
+            System.out.println("Executing experiment for " + numberOfOps + " ops");
 
-            System.out.println("Executing experiment for "+numberOfOps/2+" ops");
-
-            for (int i = 0; i < numberOfOps/2; i++) {
+            for (int i = 0; i < numberOfOps; i++) {
                 long last_send_instant = System.nanoTime();
             	if(readOnly)
             		reply = counterProxy.invokeUnordered(request);
@@ -72,11 +72,11 @@ public class LatencyClient {
                     }
             }
 
-            System.out.println("Average time for " + numberOfOps / 2 + " executions (-10%) = " + st.getAverage(true) / 1000 + " us ");
-            System.out.println("Standard desviation for " + numberOfOps / 2 + " executions (-10%) = " + st.getDP(true) / 1000 + " us ");
-            System.out.println("Average time for " + numberOfOps / 2 + " executions (all samples) = " + st.getAverage(false) / 1000 + " us ");
-            System.out.println("Standard desviation for " + numberOfOps / 2 + " executions (all samples) = " + st.getDP(false) / 1000 + " us ");
-            System.out.println("Maximum time for " + numberOfOps / 2 + " executions (all samples) = " + st.getMax(false) / 1000 + " us ");
+            System.out.println("Average time for " + numberOfOps + " executions (-10%) = " + st.getAverage(true) / 1000 + " us ");
+            System.out.println("Standard desviation for " + numberOfOps + " executions (-10%) = " + st.getDP(true) / 1000 + " us ");
+            System.out.println("Average time for " + numberOfOps + " executions (all samples) = " + st.getAverage(false) / 1000 + " us ");
+            System.out.println("Standard desviation for " + numberOfOps + " executions (all samples) = " + st.getDP(false) / 1000 + " us ");
+            System.out.println("Maximum time for " + numberOfOps + " executions (all samples) = " + st.getMax(false) / 1000 + " us ");
 
         } catch(Exception e){
         } finally {
