@@ -3,6 +3,8 @@
 MY_IP="$(hostname -i | awk '{print $1}')"
 echo "MY_IP=$MY_IP"
 
+APP_ARGS=("${@}")
+
 declare -a ips
 while [[ ${#ips[@]} -ne $PEER_NUMBER ]]; do
     echo "Waiting for all $PEER_NUMBER containers to spawn..."
@@ -31,7 +33,7 @@ kill_handler() {
 start_handler() {
     echo "START PROCESS"
     if [ $child_pid -eq 0 ]; then
-        runscripts/smartrun.sh bftsmart.demo.counter.CounterServer "$MY_ID" &
+        runscripts/smartrun.sh bftsmart.demo.microbenchmarks.LatencyServer "$MY_ID" "${APP_ARGS[@]}" &
         child_pid=$!
     fi
 }
