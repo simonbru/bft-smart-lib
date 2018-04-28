@@ -21,5 +21,26 @@ done >config/hosts.config
 
 echo "MY_ID=$MY_ID"
 
-exec runscripts/smartrun.sh bftsmart.demo.counter.CounterServer "$MY_ID"
+
+child_pid=0
+kill_handler() {
+    echo "KILLED PROCESSES"
+    kill $child_pid
+    child_pid=0
+}
+start_handler() {
+    echo "START PROCESS"
+    if [ $child_pid -eq 0 ]; then
+        runscripts/smartrun.sh bftsmart.demo.counter.CounterServer "$MY_ID" &
+        child_pid=$!
+    fi
+}
+trap 'kill_handler' SIGUSR1
+trap 'start_handler' SIGUSR2
+start_handler
+
+while true; do
+    tail -f /dev/null
+done
+# exec runscripts/smartrun.sh bftsmart.demo.counter.CounterServer "$MY_ID"
 # exec runscripts/smartrun.sh bftsmart.demo.microbenchmarks.LatencyServer "$MY_ID" 200 300
