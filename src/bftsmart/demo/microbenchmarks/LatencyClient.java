@@ -64,7 +64,9 @@ public class LatencyClient {
             		reply = counterProxy.invokeUnordered(request);
             	else
             		reply = counterProxy.invokeOrdered(request);
-                st.store(System.nanoTime() - last_send_instant);
+                long requestLatency = System.nanoTime() - last_send_instant;
+                st.store(requestLatency);
+                System.out.println("REQ_LATENCY: " + requestLatency);
 
                     if (interval > 0) {
                         //sleeps interval ms before sending next request
