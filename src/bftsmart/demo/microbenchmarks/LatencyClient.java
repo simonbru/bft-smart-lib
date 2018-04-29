@@ -74,11 +74,12 @@ public class LatencyClient {
                     }
             }
 
-            System.out.println("Average time for " + numberOfOps + " executions (-10%) = " + st.getAverage(true) / 1000 + " us ");
-            System.out.println("Standard desviation for " + numberOfOps + " executions (-10%) = " + st.getDP(true) / 1000 + " us ");
-            System.out.println("Average time for " + numberOfOps + " executions (all samples) = " + st.getAverage(false) / 1000 + " us ");
-            System.out.println("Standard desviation for " + numberOfOps + " executions (all samples) = " + st.getDP(false) / 1000 + " us ");
-            System.out.println("Maximum time for " + numberOfOps + " executions (all samples) = " + st.getMax(false) / 1000 + " us ");
+//            System.out.println("Average time for " + numberOfOps + " executions (-10%) = " + st.getAverage(true) / 1000 + " us ");
+//            System.out.println("Standard desviation for " + numberOfOps + " executions (-10%) = " + st.getDP(true) / 1000 + " us ");
+//            System.out.println("Average time for " + numberOfOps + " executions (all samples) = " + st.getAverage(false) / 1000 + " us ");
+//            System.out.println("Standard desviation for " + numberOfOps + " executions (all samples) = " + st.getDP(false) / 1000 + " us ");
+//            System.out.println("Maximum time for " + numberOfOps + " executions (all samples) = " + st.getMax(false) / 1000 + " us ");
+            System.out.println("exit");
 
         } catch(Exception e){
         } finally {
