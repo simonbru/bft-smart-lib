@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-exec java -cp bin/*:lib/* $1 $2 $3 $4 $5 $6 $7 $8 $9
+exec java -XX:ActiveProcessorCount=2 -cp bin/*:lib/* $1 $2 $3 $4 $5 $6 $7 $8 $9
