@@ -42,7 +42,7 @@ trap 'start_handler' SIGUSR2
 start_handler
 
 while true; do
-    sleep infinity
+    sleep infinity & wait ${!}
 done
 # exec runscripts/smartrun.sh bftsmart.demo.counter.CounterServer "$MY_ID"
 # exec runscripts/smartrun.sh bftsmart.demo.microbenchmarks.LatencyServer "$MY_ID" 200 300
